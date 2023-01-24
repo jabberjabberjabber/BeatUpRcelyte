@@ -117,7 +117,10 @@ static inline bool CounterP_containsNone(struct CounterP set, struct CounterP su
 	return true;
 }
 static inline bool CounterP_isEmpty(struct CounterP set) {
-	return Counter64_isEmpty(set.sub[0]) && Counter64_isEmpty(set.sub[1]);
+	for(uint32_t i = 0; i < lengthof(set.sub); ++i)
+		if(!Counter64_isEmpty(set.sub[i]))
+			return false;
+	return true;
 }
 static inline struct CounterP CounterP_and(struct CounterP a, struct CounterP b) {
 	struct CounterP out;
